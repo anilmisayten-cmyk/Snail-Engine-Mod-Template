@@ -1,9 +1,8 @@
 {
     "tabs": [
         {
-            "name": "My Mod",
-            "fromWeeks": true,
-            "weekFilter": ["my-week"]
+            "title": "My Mod",
+            "fromWeeks": ["my-week"]
         }
     ]
 }
