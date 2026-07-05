@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Snail Engine Modding Documentary</title>
+
+<style>
+    @page { size: A4; margin: 2cm; }
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; page-break-before: always; }
+    h1:first-of-type { page-break-before: avoid; }
+    h2 { color: #34495e; border-bottom: 2px solid #bdc3c7; padding-bottom: 8px; margin-top: 30px; }
+    h3 { color: #7f8c8d; margin-top: 25px; }
+    code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: 'Consolas', monospace; font-size: 0.9em; }
+    pre { background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; font-family: 'Consolas', monospace; font-size: 0.85em; line-height: 1.4; }
+    pre code { background: transparent; color: inherit; padding: 0; }
+    table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    th { background: #3498db; color: white; }
+    tr:nth-child(even) { background: #f2f2f2; }
+    blockquote { border-left: 4px solid #3498db; margin: 20px 0; padding: 10px 20px; background: #f9f9f9; }
+    @media print { h1 { page-break-before: always; } h1:first-of-type { page-break-before: avoid; } }
+</style>
+
+</head>
+<body>
+<h1 id="snail-engine-modding-documentary">Snail Engine Modding Documentary</h1>
+<h2 id="tam-kapsamli-mod-yapima-rehberi">Tam Kapsamli Mod Yapima Rehberi</h2>
+<hr />
+<h2 id="bolum-1-giris">Bolum 1: Giris</h2>
+<h3 id="11-snail-engine-nedir">1.1 Snail Engine Nedir?</h3>
+<p>Snail Engine, Friday Night Funkin' (FNF) oyunu icin gelistirilmis bir mod motorudur. Psych Engine 0.5.2h uzerine insa edilmis olup, ozellestirilmis CFFI primitives, gelismis modchart sistemi, ve genis shader yelpazesi ile FNF modding dunyasinda one cikan bir motordur.</p>
+<h3 id="12-ozellikler">1.2 Ozellikler</h3>
+<ul>
+<li><strong>18+ Modchart Modifier</strong>: Notalarin hareketini, gorunurlugunu ve efektlerini degistirmek icin genis yelpaze</li>
+<li><strong>13+ Shader</strong>: Goruntu efektleri icin cesitli shader'lar</li>
+<li><strong>8+ Built-in Editor</strong>: Character, stage, note, dialog, week, modchart, shader ve options editörleri</li>
+<li><strong>HScript Scripting</strong>: Haxe dilinde script yazarak oyunu ozellestirme</li>
+<li><strong>Multi-Format Destek</strong>: Psych Engine, Codename Engine, ve V-Slice formatlarini okuma</li>
+<li><strong>Custom Note NoteSkinleri</strong>: Ozel nota goruntuleri ve efektleri</li>
+<li><strong>Dinamik Stage Sistemi</strong>: JSON tabanli stage olusturma</li>
+<li><strong>Week Sistemi</strong>: Story mode ve freeplay icin hafta yapilandirmasi</li>
+<li><strong>Dialog Sistemi</strong>: Karakter diyalog ve cutscene sistemi</li>
+<li><strong>Character Sistemi</strong>: Animasyonlu karakter olusturma</li>
+<li><strong>Ses Sistemi</strong>: Muzik ve ses efekti yonetimi</li>
+</ul>
+<h3 id="13-gereksinimler">1.3 Gereksinimler</h3>
+<p>Mod yapimi icin su gereksinimleri karsilamaniz gerekir:</p>
+<ul>
+<li><strong>Snail Engine</strong>: Son surum Snail Engine (v1.0.0+)</li>
+<li><strong>Haxe</strong>: Haxe 4.2.5+ kurulmus olmali</li>
+<li><strong>Haxelib</strong>: Haxe kutuphane yoneticisi</li>
+<li><strong>IDE</strong>: Visual Studio Code, Sublime Text veya baska bir kod editoru</li>
+<li><strong>Gorsel Duzenleyici</strong>: Photoshop, GIMP veya baska bir gorsel duzenleyici</li>
+<li><strong>Ses Duzenleyici</strong>: Audacity veya baska bir ses duzenleyici</li>
+<li><strong>Chart Editor</strong>: Snail Engine icideki chart editor'u veya baska bir FNF chart editor'u</li>
+</ul>
+<h3 id="14-kurulum">1.4 Kurulum</h3>
+<ol>
+<li>Snail Engine'i indirin ve kurun</li>
+<li>Haxe'i indirin ve kurun</li>
+<li>Haxelib'i kurun</li>
+<li>Gerekli kutuphaneleri yukleyin</li>
+<li>IDE'nizi ayarlayin</li>
+</ol>
+<hr />
+<h2 id="bolum-2-mod-yapisi-gercek-yapi">Bolum 2: Mod Yapisi (GERCEK YAPI)</h2>
+<h3 id="21-ana-klasor-yapisi">2.1 Ana Klasor Yapisi</h3>
+<p>Snail Engine modlari <code>content/</code> klasorunde bulunur. Her mod kendi klasorune sahiptir:</p>
+<pre><code>content/
+├── my-mod/                    ← Senin modun
+│   ├── meta.json              ← Mod meta verileri
+│   ├── data/                  ← Oyun verileri
+│   ├── songs/                 ← SARKILAR BURADA!
+│   ├── images/                ← Gorseller
+│   ├── sounds/                ← Ses efektleri
+│   ├── music/                 ← Arka plan muzikleri
+│   ├── shaders/               ← Shader dosyalari
+│   └── scripts/               ← Script'ler
+├── base-game-main/            ← Ana oyun icerigi
+└── ...
+</code></pre>
+<h3 id="22-onemli-sarki-yeri">2.2 ONEMLI: Sarki Yeri</h3>
+<p><strong>SARKILAR <code>data/songs/</code> DEGIL, <code>songs/</code> KLASORUNDEDIR!</strong></p>
+<pre><code>my-mod/
+├── songs/                     ← SARKILAR BURADA
+│   ├── my-song/
+│   │   ├── audio/             ← Ses dosyalari
+│   │   ├── charts/            ← Chart dosyalari
+│   │   ├── meta.json          ← Sarki bilgileri
+│   │   └── info.txt           ← Eski format bilgi
+│   └── ...
+└── data/                      ← Diger veriler
+    ├── characters/
+    ├── stages/
+    └── ...
+</code></pre>
+<h3 id="23-meta-json-yapisi">2.3 Meta JSON Yapisi</h3>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;My Mod&quot;,                    // Mod adi
+    &quot;description&quot;: &quot;My awesome mod&quot;,      // Aciklama
+    &quot;global&quot;: false,                     // Global mod mu?
+    &quot;windowTitle&quot;: &quot;Friday Night Funkin' - My Mod&quot;,  // Pencere basligi
+    &quot;iconFile&quot;: &quot;UI/icon64&quot;,             // Ikon dosyasi
+    &quot;defaultTransition&quot;: &quot;swipe&quot;         // Varsayilan gecis efekti
+}
+</code></pre>
+<h3 id="24-tam-klasor-agaci">2.4 Tam Klasor Agaci</h3>
+<pre><code>my-mod/
+├── meta.json
+├── README.md
+│
+├── data/
+│   ├── characters/
+│   │   ├── bf.json
+│   │   ├── dad.json
+│   │   ├── gf.json
+│   │   └── my-character.json
+│   ├── stages/
+│   │   ├── stage/
+│   │   │   ├── data.json
+│   │   │   └── script.hx
+│   │   └── mystage/
+│   │       ├── data.json
+│   │       └── script.hx
+│   ├── weeks/
+│   │   ├── tutorial.json
+│   │   ├── week1.json
+│   │   └── my-week.json
+│   ├── noteskins/
+│   │   └── default.json
+│   ├── notetypes/
+│   │   └── my-notetype.hx
+│   ├── events/
+│   │   └── event-list.txt
+│   ├── dialogue/
+│   │   └── my-dialogue/
+│   │       └── dialogue.txt
+│   ├── scripts/
+│   │   └── pixelUI.hx
+│   └── freeplay.json
+│
+├── songs/
+│   ├── tutorial/
+│   │   ├── audio/
+│   │   │   ├── Inst.ogg
+│   │   │   └── Voices.ogg
+│   │   ├── charts/
+│   │   │   ├── easy.json
+│   │   │   ├── normal.json
+│   │   │   └── hard.json
+│   │   ├── meta.json
+│   │   └── info.txt
+│   └── my-song/
+│       ├── audio/
+│       │   ├── Inst.ogg
+│       │   ├── Voices.ogg
+│       │   ├── Voices-opp.ogg
+│       │   └── Voices-player.ogg
+│       ├── charts/
+│       │   ├── easy.json
+│       │   ├── normal.json
+│       │   ├── hard.json
+│       │   └── events.json
+│       ├── meta.json
+│       └── info.txt
+│
+├── images/
+│   ├── backgrounds/
+│   │   ├── stageback.png
+│   │   ├── stagefront.png
+│   │   ├── stagecurtains.png
+│   │   ├── christmas/
+│   │   ├── limo/
+│   │   ├── philly/
+│   │   └── tank/
+│   ├── characters/
+│   │   ├── bf.png
+│   │   ├── bf.xml
+│   │   ├── Dad_MF.png
+│   │   ├── Dad_MF.xml
+│   │   └── ...
+│   ├── cutscenes/
+│   │   └── my-cutscene/
+│   │       ├── Animation.json
+│   │       ├── spritemap1.json
+│   │       └── spritemap1.png
+│   ├── menus/
+│   │   └── story/
+│   │       ├── bgs/
+│   │       ├── characters/
+│   │       └── weeks/
+│   ├── pixelUI/
+│   │   ├── dialogueBox-pixel.png
+│   │   ├── senpaiPortrait.png
+│   │   └── ...
+│   └── UI/
+│       ├── icon64.png
+│       ├── icons/
+│       │   ├── icon-bf.png
+│       │   └── icon-dad.png
+│       └── notes/
+│           ├── NOTE_assets.png
+│           ├── NOTE_assets.xml
+│           ├── noteSplashes-vanilla.png
+│           ├── noteSplashes-vanilla.xml
+│           ├── holdCover.png
+│           └── holdCover.xml
+│
+├── sounds/
+│   ├── Miss note.ogg
+│   ├── Hit note.ogg
+│   ├── thunder_1.ogg
+│   └── ...
+│
+├── music/
+│   ├── DISTORTO.ogg
+│   ├── klaskii-romper.ogg
+│   └── ...
+│
+├── shaders/
+│   ├── adjustColor.frag
+│   ├── rain.frag
+│   └── my-shader.frag
+│
+└── scripts/
+    ├── global.hx
+    ├── myplaystate.hx
+    ├── modifiers/
+    │   ├── example-modifier.hx
+    │   └── my-modifier.hx
+    └── states/
+        └── my-state.hx
+</code></pre>
+<hr />
+<h2 id="bolum-3-character-olusturma">Bolum 3: Character Olusturma</h2>
+<h3 id="31-character-nedir">3.1 Character Nedir?</h3>
+<p>Character, oyundaki NPC veya oyuncu character'idir. Her character'in animasyonlari, goruntusu ve ozellikleri vardir.</p>
+<h3 id="32-character-json-yapisi">3.2 Character JSON Yapisi</h3>
+<pre><code class="language-json">{
+    &quot;animations&quot;: [                    // Animation listesi
+        {
+            &quot;anim&quot;: &quot;idle&quot;,           // Animation adi
+            &quot;name&quot;: &quot;BF idle dance&quot;,  // Spritesheet'teki prefix
+            &quot;fps&quot;: 24,                // FPS degeri
+            &quot;loop&quot;: false,            // Loop yapisi
+            &quot;offsets&quot;: [-2, -2],      // [x, y] offset degerleri
+            &quot;indices&quot;: []             // Frame sirasi
+        }
+    ],
+    &quot;image&quot;: &quot;characters/bf&quot;,         // Spritesheet yolu
+    &quot;scale&quot;: 1,                       // Olcek
+    &quot;sing_duration&quot;: 4,               // Sing pose suresi
+    &quot;healthicon&quot;: &quot;bf&quot;,               // Health icon adi
+    &quot;position&quot;: [-10, 340],           // [x, y] character pozisyonu
+    &quot;camera_position&quot;: [30, -34],     // [x, y] kamera offset
+    &quot;flip_x&quot;: true,                   // Yatay cevirme
+    &quot;no_antialiasing&quot;: false,         // Pixel art modu
+    &quot;healthbar_colour&quot;: -13520687,    // Healthbar rengi
+    &quot;dance_every&quot;: 2,                 // Dance idle arasi beat
+    &quot;vslice_sustains&quot;: false          // Hold frame sonu
+}
+</code></pre>
+<h3 id="33-zorunlu-animasyonlar">3.3 Zorunlu Animasyonlar</h3>
+<p>Character'in sahip olmasi gereken animasyonlar:</p>
+<ul>
+<li><code>idle</code> - Duragan durus animasyonu</li>
+<li><code>singLEFT</code> - Sol notasi animasyonu</li>
+<li><code>singDOWN</code> - Asagi notasi animasyonu</li>
+<li><code>singUP</code> - Yukari notasi animasyonu</li>
+<li><code>singRIGHT</code> - Sag notasi animasyonu</li>
+</ul>
+<p>Opsiyonel animasyonlar:
+- <code>singLEFTmiss</code> - Sol kacirma animasyonu
+- <code>singDOWNmiss</code> - Asagi kacirma animasyonu
+- <code>singUPmiss</code> - Yukari kacirma animasyonu
+- <code>singRIGHTmiss</code> - Sag kacirma animasyonu
+- <code>hey</code> - Hey animasyonu (BF icin)
+- <code>danceLeft</code> / <code>danceRight</code> - Alternatif idle (girlfriend icin)</p>
+<h3 id="34-spritesheet-formatlari">3.4 Spritesheet Formatlari</h3>
+<h4 id="png-xml-sparrow-atlas">PNG + XML (Sparrow Atlas)</h4>
+<pre><code>images/characters/
+├── bf.png
+└── bf.xml
+</code></pre>
+<ul>
+<li>En eski ve en yaygin format</li>
+<li><code>Paths.getSparrowAtlas()</code> ile yuklenir</li>
+</ul>
+<h4 id="animate-atlas">Animate Atlas</h4>
+<pre><code>images/characters/darnellBlazin/
+├── Animation.json
+├── spritemap1.json
+└── spritemap1.png
+</code></pre>
+<ul>
+<li>Daha yeni format</li>
+<li>Buyuk animasyonlar icin ideal</li>
+</ul>
+<h4 id="packer-atlas">Packer Atlas</h4>
+<pre><code>images/characters/
+├── spirit.txt
+└── spirit.png
+</code></pre>
+<ul>
+<li>En basit format</li>
+</ul>
+<h3 id="35-character-script-hx">3.5 Character Script (.hx)</h3>
+<p>Bazi character'lar ozel script'ler ister:</p>
+<pre><code class="language-haxe">// data/characters/my-character.hx
+
+// Nota tiplerini isle
+function onNoteHit(note) {
+    if (note.noteType == &quot;myNoteType&quot;) {
+        // Ozel nota islemi
+    }
+}
+</code></pre>
+<h3 id="36-offset-hesaplama">3.6 Offset Hesaplama</h3>
+<p>Offset degerleri character'in ekrandaki pozisyonunu ayarlamak icin kullanilir:</p>
+<ul>
+<li><code>offsets[0]</code> = X ekseninde kayma (negatif = sola, pozitif = saga)</li>
+<li><code>offsets[1]</code> = Y ekseninde kayma (negatif = yukari, pozitif = asagi)</li>
+</ul>
+<h3 id="37-kamera-pozisyonu">3.7 Kamera Pozisyonu</h3>
+<p><code>camera_position</code> degerleri character'in kamerada nerede gorunecegini belirler:</p>
+<ul>
+<li><code>camera_position[0]</code> = Kamera X offset</li>
+<li><code>camera_position[1]</code> = Kamera Y offset</li>
+</ul>
+<h3 id="38-healthbar-rengi">3.8 Healthbar Rengi</h3>
+<p><code>healthbar_colour</code> degeri character'in saglik cubugundaki rengi belirler:</p>
+<ul>
+<li>Hex deger olarak girilmelidir</li>
+<li>Ornegin: -13520687 veya 0xFF32CD32</li>
+</ul>
+<hr />
+<h2 id="bolum-4-sarki-olusturma">Bolum 4: Sarki Olusturma</h2>
+<h3 id="41-onemli-sarki-yeri">4.1 ONEMLI: Sarki Yeri</h3>
+<p><strong>SARKILAR <code>data/songs/</code> DEGIL, <code>songs/</code> KLASORUNDEDIR!</strong></p>
+<pre><code>my-mod/
+└── songs/                     ← SARKILAR BURADA
+    └── my-song/
+        ├── audio/             ← Ses dosyalari
+        │   ├── Inst.ogg
+        │   └── Voices.ogg
+        ├── charts/            ← Chart dosyalari
+        │   ├── easy.json
+        │   ├── normal.json
+        │   ├── hard.json
+        │   └── events.json
+        ├── meta.json          ← Sarki bilgileri
+        └── info.txt           ← Eski format bilgi
+</code></pre>
+<h3 id="42-sarki-klasor-yapisi">4.2 Sarki Klasor Yapisi</h3>
+<pre><code>songs/my-song/
+├── audio/
+│   ├── Inst.ogg               ← Ana sarki (zorunlu)
+│   ├── Voices.ogg             ← Vokaller
+│   ├── Voices-opp.ogg         ← Opponent vokal (opsiyonel)
+│   └── Voices-player.ogg      ← Player vokal (opsiyonel)
+├── charts/
+│   ├── easy.json              ← Easy zorluk
+│   ├── normal.json            ← Normal zorluk
+│   ├── hard.json              ← Hard zorluk
+│   └── events.json            ← Event'ler
+├── meta.json                  ← Sarki bilgileri
+└── info.txt                   ← Eski format bilgi
+</code></pre>
+<h3 id="43-metajson-yapisi">4.3 meta.json Yapisi</h3>
+<pre><code class="language-json">{
+    &quot;songName&quot;: &quot;my-song&quot;,              // Sarki adi
+    &quot;displayName&quot;: &quot;My Song&quot;,           // Menu gosterim adi
+    &quot;composers&quot;: [&quot;Your Name&quot;],         // Besteciler
+    &quot;charters&quot;: [&quot;Your Name&quot;],          // Chart yazanlar
+    &quot;artists&quot;: [&quot;Your Name&quot;],           // Sanatcilar
+    &quot;coders&quot;: [],                       // Programcilar
+    &quot;difficulties&quot;: [&quot;easy&quot;, &quot;Normal&quot;, &quot;hard&quot;],  // Zorluk seviyeleri
+    &quot;freeplayColor&quot;: &quot;#9271FD&quot;,         // Freeplay rengi
+    &quot;freeplayIcon&quot;: &quot;bf&quot;                // Freeplay ikonu
+}
+</code></pre>
+<h3 id="44-infotxt-yapisi">4.4 info.txt Yapisi</h3>
+<pre><code>display name=My Song
+artist=Your Name
+arnings=
+bpm=120
+speed=1.8
+needsVoices=1
+</code></pre>
+<h3 id="45-chart-json-yapisi">4.5 Chart JSON Yapisi</h3>
+<pre><code class="language-json">{
+    &quot;song&quot;: &quot;my-song&quot;,                   // Sarki adi
+    &quot;notes&quot;: [],                         // Nota section'lari
+    &quot;events&quot;: [],                        // Event'ler
+    &quot;bpm&quot;: 120,                         // Beats per minute
+    &quot;needsVoices&quot;: true,                // Vokal dosyasi gerekli mi?
+    &quot;speed&quot;: 1.8,                       // Scroll hizi
+    &quot;keys&quot;: 4,                          // Nota sayisi per side
+    &quot;lanes&quot;: 2,                         // Toplam lane sayisi
+    &quot;player1&quot;: &quot;bf&quot;,                    // BF character ID
+    &quot;player2&quot;: &quot;dad&quot;,                   // Dad character ID
+    &quot;gfVersion&quot;: &quot;gf&quot;,                  // GF character ID
+    &quot;stage&quot;: &quot;stage&quot;,                   // Stage ID
+    &quot;arrowSkins&quot;: [&quot;&quot;],                 // Nota skinleri
+    &quot;format&quot;: &quot;nmv2&quot;                    // Chart formati
+}
+</code></pre>
+<h3 id="46-note-section-yapisi">4.6 Note Section Yapisi</h3>
+<p>Her section sunu icerir:</p>
+<pre><code class="language-json">{
+    &quot;sectionNotes&quot;: [                    // Nota listesi
+        [1000, 0, 200],                  // [strumTime, noteData, sustainLength]
+        [1250, 2, 0]                     // [strumTime, noteData, sustainLength]
+    ],
+    &quot;mustHitSection&quot;: false,             // true = opponent, false = player
+    &quot;sectionBeats&quot;: 4,                   // Section'taki beat sayisi
+    &quot;gfSection&quot;: false,                  // GF section mu?
+    &quot;bpm&quot;: 120,                          // Bu section'da BPM degisimi
+    &quot;changeBPM&quot;: false,                  // BPM degisiyor mu?
+    &quot;altAnim&quot;: false                     // Alternatif animasyon kullan
+}
+</code></pre>
+<h3 id="47-note-formati">4.7 Note Formati</h3>
+<p><code>sectionNotes</code> icindeki her nota:</p>
+<pre><code>[strumTime, noteData, sustainLength]
+</code></pre>
+<ul>
+<li><code>strumTime</code>: Notanin gorunme zamani (milisaniye)</li>
+<li><code>noteData</code>: Nota pozisyonu (0=sol, 1=asagi, 2=yukari, 3=sag)</li>
+<li><code>sustainLength</code>: Hold notasi uzunlugu (0 = kisa not)</li>
+</ul>
+<h3 id="48-nota-hesaplama">4.8 Nota Hesaplama</h3>
+<p>Notalarin zamani su formulle hesaplanir:</p>
+<pre><code>strumTime = (beatNumber * (60000 / bpm))
+</code></pre>
+<p>Ornek 120 BPM icin:
+- 1 beat = 500ms
+- 4 beat (1 section) = 2000ms</p>
+<h3 id="49-events">4.9 Events</h3>
+<p>Event'ler sarki sirasinda yapilan degisikliklerdir:</p>
+<pre><code class="language-json">[
+    [1000, [[&quot;Change Character&quot;, &quot;dad&quot;, &quot;angry-dad&quot;]]],
+    [5000, [[&quot;Play Animation&quot;, &quot;singUP&quot;, &quot;bf&quot;]]]
+]
+</code></pre>
+<h3 id="410-zorluk-seviyeleri">4.10 Zorluk Seviyeleri</h3>
+<p>Her zorluk icin ayri bir JSON dosyasi olusturun:
+- <code>charts/easy.json</code> - Kolay
+- <code>charts/normal.json</code> - Normal
+- <code>charts/hard.json</code> - Zor</p>
+<p>Her dosya ayni formati kullanir, sadece <code>speed</code> ve <code>notes</code> degerleri degisir.</p>
+<h3 id="411-sarki-ses-dosyalari">4.11 Sarki Ses Dosyalari</h3>
+<p>Sarki ses dosyalari su yerlerde bulunur:
+- <code>songs/my-song/audio/Inst.ogg</code> - Ana sarki
+- <code>songs/my-song/audio/Voices.ogg</code> - Vokaller
+- <code>songs/my-song/audio/Voices-opp.ogg</code> - Opponent vokal (opsiyonel)
+- <code>songs/my-song/audio/Voices-player.ogg</code> - Player vokal (opsiyonel)</p>
+<hr />
+<h2 id="bolum-5-stage-olusturma">Bolum 5: Stage Olusturma</h2>
+<h3 id="51-stage-nedir">5.1 Stage Nedir?</h3>
+<p>Stage, sarki sirasinda arka plan olarak kullanilan gorsel ve objelerdir.</p>
+<h3 id="52-stage-klasor-yapisi">5.2 Stage Klasor Yapisi</h3>
+<pre><code>data/stages/
+├── mystage/
+│   ├── data.json               ← Stage verileri
+│   └── script.hx               ← Stage scripti
+└── stage/
+    ├── data.json
+    └── script.hx
+</code></pre>
+<h3 id="53-datajson-yapisi">5.3 data.json Yapisi</h3>
+<pre><code class="language-json">{
+    &quot;defaultZoom&quot;: 0.9,                  // Kamera zoom
+    &quot;isPixelStage&quot;: false,               // Pixel art stage mi?
+    &quot;boyfriend&quot;: [770, 100],             // [x, y] BF pozisyonu
+    &quot;girlfriend&quot;: [400, 130],            // [x, y] GF pozisyonu
+    &quot;opponent&quot;: [100, 100],              // [x, y] Dad pozisyonu
+    &quot;hide_girlfriend&quot;: false,            // GF gizleme
+    &quot;camera_boyfriend&quot;: [0, 0],          // [x, y] BF kamera offset
+    &quot;camera_opponent&quot;: [0, 0],           // [x, y] Dad kamera offset
+    &quot;camera_girlfriend&quot;: [0, 0],         // [x, y] GF kamera offset
+    &quot;camera_speed&quot;: 1,                   // Kamera hareket hizi
+    &quot;dadZIndex&quot;: 3,                      // Dad Z-index
+    &quot;bfZIndex&quot;: 3,                       // BF Z-index
+    &quot;gfZIndex&quot;: 3,                       // GF Z-index
+    &quot;stageObjects&quot;: []                   // Arka plan objeleri
+}
+</code></pre>
+<h3 id="54-stageobject-yapisi">5.4 StageObject Yapisi</h3>
+<pre><code class="language-json">{
+    &quot;id&quot;: &quot;bg&quot;,                          // Object ID
+    &quot;asset&quot;: &quot;stageback&quot;,                // Gorsel yolu
+    &quot;position&quot;: [-600, -200],            // [x, y] Pozisyon
+    &quot;scrollFactor&quot;: [1, 1],              // [x, y] Parallax
+    &quot;scale&quot;: [1, 1],                     // [x, y] Olcek
+    &quot;alpha&quot;: 1,                          // Saydamlik
+    &quot;flipX&quot;: false,                      // Yatay cevirme
+    &quot;flipY&quot;: false,                      // Dikey cevirme
+    &quot;zIndex&quot;: 1,                         // Katman sirasi
+    &quot;angle&quot;: 0,                          // Rotasyon
+    &quot;colour&quot;: null,                      // Renk filtresi
+    &quot;blend&quot;: null,                       // Blend modu
+    &quot;antialiasing&quot;: true,                // Antialiasing
+    &quot;highQuality&quot;: true,                 // Yuksek kalite
+    &quot;customInstance&quot;: null,              // Ozel class
+    &quot;animations&quot;: [],                    // Animasyonlar
+    &quot;advancedCalls&quot;: [],                 // Gelismis cagirilar
+    &quot;setProperties&quot;: []                  // Ozellik ayarlari
+}
+</code></pre>
+<h3 id="55-arka-plan-gorselleri">5.5 Arka Plan Gorselleri</h3>
+<p>Gorselleri <code>images/backgrounds/</code> klasorune koyun:
+- <code>stageback.png</code> - Arka plan
+- <code>stagefront.png</code> - On plan
+- <code>stagecurtains.png</code> - Perde</p>
+<h3 id="56-animasyonlu-obje-ornegini">5.6 Animasyonlu Obje Ornegini</h3>
+<pre><code class="language-json">{
+    &quot;id&quot;: &quot;bg&quot;,
+    &quot;asset&quot;: &quot;backgrounds/week2/halloween_bg&quot;,
+    &quot;position&quot;: [-200, -100],
+    &quot;scale&quot;: [1.1, 1.1],
+    &quot;animations&quot;: [
+        {
+            &quot;anim&quot;: &quot;idle&quot;,
+            &quot;name&quot;: &quot;halloweem bg0&quot;,
+            &quot;fps&quot;: 24,
+            &quot;loop&quot;: false
+        },
+        {
+            &quot;anim&quot;: &quot;lightning&quot;,
+            &quot;name&quot;: &quot;halloweem bg lightning strike&quot;,
+            &quot;fps&quot;: 24,
+            &quot;loop&quot;: false
+        }
+    ]
+}
+</code></pre>
+<h3 id="57-stage-script-scripthx">5.7 Stage Script (script.hx)</h3>
+<pre><code class="language-haxe">function onCreate() {
+    trace(&quot;Stage yuklendi!&quot;);
+}
+
+function onBeatHit() {
+    if (curBeat % 4 == 0) {
+        bg.animation.play(&quot;lightning&quot;);
+    }
+}
+
+function onUpdate(elapsed) {
+    // Frame guncelleme
+}
+</code></pre>
+<hr />
+<h2 id="bolum-6-week-olusturma">Bolum 6: Week Olusturma</h2>
+<h3 id="61-week-nedir">6.1 Week Nedir?</h3>
+<p>Week, story mode'da bir dizi sarkiyi temsil eder. Her week'in sarkilari, character'lari ve ozellikleri vardir.</p>
+<h3 id="62-week-json-yapisi">6.2 Week JSON Yapisi</h3>
+<pre><code class="language-json">{
+    &quot;songs&quot;: [                            // Sarki listesi
+        [&quot;my-song&quot;, &quot;dad&quot;, [146, 113, 253]]
+    ],
+    &quot;weekCharacters&quot;: [&quot;dad&quot;, &quot;bf&quot;, &quot;gf&quot;],  // Menu character'leri
+    &quot;weekBackground&quot;: &quot;stage&quot;,             // Stage ID
+    &quot;weekBefore&quot;: &quot;&quot;,                      // Onceki week ID'si
+    &quot;storyName&quot;: &quot;My Custom Week&quot;,         // Story mode basligi
+    &quot;weekName&quot;: &quot;Week Template&quot;,           // Menu gosterim adi
+    &quot;freeplayColor&quot;: [146, 113, 253],      // Freeplay rengi
+    &quot;startUnlocked&quot;: true,                 // Baslangicta acik mi?
+    &quot;hiddenUntilUnlocked&quot;: false,          // Acilana kadar gizli mi?
+    &quot;hideStoryMode&quot;: false,                // Story mode'dan gizle
+    &quot;hideFreeplay&quot;: false                  // Freeplay'den gizle
+}
+</code></pre>
+<h3 id="63-sarki-listesi-formati">6.3 Sarki Listesi Formati</h3>
+<p>Her sarki su formatta olmalidir:</p>
+<pre><code class="language-json">[&quot;sarkiAdi&quot;, &quot;opponentCharacterID&quot;, [r, g, b]]
+</code></pre>
+<h3 id="64-week-characterleri">6.4 Week Character'leri</h3>
+<p><code>weekCharacters</code> dizisi 3 eleman icerir:
+- <code>weekCharacters[0]</code>: Sol taraftaki character (genelde opponent)
+- <code>weekCharacters[1]</code>: Ortadaki character (genelde BF)
+- <code>weekCharacters[2]</code>: Sag taraftaki character (genelde GF)</p>
+<hr />
+<h2 id="bolum-7-noteskin-olusturma">Bolum 7: Noteskin Olusturma</h2>
+<h3 id="71-noteskin-nedir">7.1 Noteskin Nedir?</h3>
+<p>Noteskin, notalarin gorunusunu belirler. Her notskin'in nota, receptor ve splash animasyonlari vardir.</p>
+<h3 id="72-noteskin-json-yapisi">7.2 Noteskin JSON Yapisi</h3>
+<pre><code class="language-json">{
+    &quot;noteTexture&quot;: &quot;UI/notes/NOTE_assets&quot;,           // Nota spritesheet'i
+    &quot;splashTexture&quot;: &quot;UI/notes/noteSplashes-vanilla&quot;, // Splash spritesheet'i
+    &quot;sustainSplashTexture&quot;: &quot;UI/notes/holdCover&quot;,    // Sustain splash spritesheet
+    &quot;antialiasing&quot;: true,                            // Antialiasing
+    &quot;singAnimations&quot;: [                              // Sing animasyonlari
+        &quot;singLEFT&quot;,
+        &quot;singDOWN&quot;,
+        &quot;singUP&quot;,
+        &quot;singRIGHT&quot;
+    ],
+    &quot;noteScale&quot;: 0.7,                                // Nota olcegi
+    &quot;splashScale&quot;: 1,                                // Splash olcegi
+    &quot;inGameColoring&quot;: true,                          // Oyun ici renklendirme
+    &quot;splashesEnabled&quot;: true,                         // Splash efektleri acik
+    &quot;susSplashesEnabled&quot;: true                       // Sustain splash acik
+}
+</code></pre>
+<hr />
+<h2 id="bolum-8-scripting-hscript">Bolum 8: Scripting (HScript)</h2>
+<h3 id="81-scripting-nedir">8.1 Scripting Nedir?</h3>
+<p>Scripting, Haxe dilinde yazilan script'ler ile oyunu ozellestirme yontemidir.</p>
+<h3 id="82-script-yerleri">8.2 Script Yerleri</h3>
+<p>Script'lerin konacagi yerler:
+- <code>scripts/global.hx</code> - Global script
+- <code>scripts/myplaystate.hx</code> - PlayState scripti
+- <code>data/stages/mystage/script.hx</code> - Stage scripti
+- <code>scripts/modifiers/my-modifier.hx</code> - Modifier scripti
+- <code>data/characters/my-character.hx</code> - Character scripti</p>
+<h3 id="83-global-script-ornegi">8.3 Global Script Ornegi</h3>
+<pre><code class="language-haxe">// scripts/global.hx
+
+function onCreate() {
+    trace(&quot;Global script yuklendi!&quot;);
+}
+
+function onUpdate(elapsed) {
+    // Frame guncelleme
+}
+
+function onBeatHit() {
+    // Beat guncelleme
+}
+
+function onSongStart() {
+    trace(&quot;Sarki basladi!&quot;);
+}
+
+function onEndSong() {
+    trace(&quot;Sarki bitti!&quot;);
+    return 0;
+}
+
+function onNoteHit(note) {
+    // Nota vurma
+}
+
+function onNoteMiss(note) {
+    // Nota kacirma
+}
+</code></pre>
+<h3 id="84-playstate-script-ornegi">8.4 PlayState Script Ornegi</h3>
+<pre><code class="language-haxe">// scripts/myplaystate.hx
+
+function onCreate() {
+    trace(&quot;PlayState script yuklendi!&quot;);
+    trace(&quot;Sarki: &quot; + songName);
+    trace(&quot;BPM: &quot; + bpm);
+    trace(&quot;Scroll Hizi: &quot; + scrollSpeed);
+}
+
+function onUpdate(elapsed) {
+    // Frame guncelleme
+}
+
+function onBeatHit() {
+    if (curBeat % 4 == 0) {
+        FlxG.camera.zoom += 0.03;
+    }
+}
+
+function onNoteHit(note) {
+    FlxG.camera.shake(0.01, 0.1);
+}
+
+function onNoteMiss(note) {
+    FlxG.camera.flash(FlxColor.RED, 0.3);
+}
+</code></pre>
+<h3 id="85-stage-script-ornegi">8.5 Stage Script Ornegi</h3>
+<pre><code class="language-haxe">// data/stages/mystage/script.hx
+
+function onCreate() {
+    trace(&quot;Stage script yuklendi!&quot;);
+}
+
+function onBeatHit() {
+    if (curBeat % 4 == 0) {
+        bg.animation.play(&quot;lightning&quot;);
+    }
+}
+
+function onUpdate(elapsed) {
+    // Frame guncelleme
+}
+</code></pre>
+<h3 id="86-script-fonksiyonlari">8.6 Script Fonksiyonlari</h3>
+<p>Her script su fonksiyonlari icerir:</p>
+<h4 id="tum-scriptler">Tum Script'ler</h4>
+<ul>
+<li><code>onCreate()</code> - Olusturma</li>
+<li><code>onUpdate(elapsed)</code> - Frame guncelleme</li>
+<li><code>onDestroy()</code> - Temizlik</li>
+</ul>
+<h4 id="playstate-scriptleri">PlayState Scriptleri</h4>
+<ul>
+<li><code>onBeatHit()</code> - Beat guncelleme</li>
+<li><code>onStepHit()</code> - Step guncelleme</li>
+<li><code>onNoteHit(note)</code> - Nota vurma</li>
+<li><code>onNoteMiss(note)</code> - Nota kacirma</li>
+<li><code>onNoteCreation(note)</code> - Nota olusturma</li>
+<li><code>onEvent(name, value1, value2)</code> - Event calistirma</li>
+<li><code>onSectionHit()</code> - Section degisimi</li>
+<li><code>onStartCountdown()</code> - Countdown baslangici</li>
+<li><code>onSongStart()</code> - Sarki baslangici</li>
+<li><code>onEndSong()</code> - Sarki bitisi</li>
+</ul>
+<h3 id="87-mevcut-degiskenler">8.7 Mevcut Degiskenler</h3>
+<p>Her script su degiskenlere erisebilir:</p>
+<h4 id="genel">Genel</h4>
+<ul>
+<li><code>Math</code> - Matematik fonksiyonlari</li>
+<li><code>Std</code> - Standart fonksiyonlar</li>
+<li><code>StringTools</code> - String araclar</li>
+<li><code>Type</code> - Tip fonksiyonlari</li>
+</ul>
+<h4 id="flixel">Flixel</h4>
+<ul>
+<li><code>FlxG</code> - Ana Flixel sinifi</li>
+<li><code>FlxSprite</code> - Sprite sinifi</li>
+<li><code>FlxCamera</code> - Kamera sinifi</li>
+<li><code>FlxMath</code> - Matematik fonksiyonlari</li>
+<li><code>FlxTimer</code> - Timer sinifi</li>
+<li><code>FlxTween</code> - Tween sinifi</li>
+<li><code>FlxEase</code> - Ease fonksiyonlari</li>
+<li><code>FlxSound</code> - Ses sinifi</li>
+<li><code>FlxText</code> - Text sinifi</li>
+<li><code>FlxRuntimeShader</code> - Runtime shader</li>
+</ul>
+<h4 id="fnf">FNF</h4>
+<ul>
+<li><code>Paths</code> - Yol fonksiyonlari</li>
+<li><code>MusicBeatState</code> - Beat state</li>
+<li><code>Conductor</code> - Conductor sinifi</li>
+<li><code>ClientPrefs</code> - Tercihler</li>
+<li><code>CoolUtil</code> - Havaclik araclar</li>
+<li><code>PlayState</code> - Oyun durumu</li>
+<li><code>FunkinSound</code> - Ses sinifi</li>
+</ul>
+<hr />
+<h2 id="bolum-9-modchart-sistemi">Bolum 9: Modchart Sistemi</h2>
+<h3 id="91-modchart-nedir">9.1 Modchart Nedir?</h3>
+<p>Modchart, notalarin hareketini, gorunurlugunu veya diger ozelliklerini degistiren efektlerdir.</p>
+<h3 id="92-built-in-modifierlar">9.2 Built-in Modifier'lar</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Modifier</th>
+<th>Aciklama</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>reverse</td>
+<td>Notalari ters cevirir</td>
+</tr>
+<tr>
+<td>2</td>
+<td>confusion</td>
+<td>Notalari dondurur</td>
+</tr>
+<tr>
+<td>3</td>
+<td>opponentSwap</td>
+<td>Oyuncu degisimi</td>
+</tr>
+<tr>
+<td>4</td>
+<td>flip</td>
+<td>Notalari yatay cevirir</td>
+</tr>
+<tr>
+<td>5</td>
+<td>invert</td>
+<td>Notalari degistirir</td>
+</tr>
+<tr>
+<td>6</td>
+<td>drunk</td>
+<td>Notalari sarhoş eder</td>
+</tr>
+<tr>
+<td>7</td>
+<td>beat</td>
+<td>Notalari beat ile hareket ettirir</td>
+</tr>
+<tr>
+<td>8</td>
+<td>stealth</td>
+<td>Notalari gorunmez yapar</td>
+</tr>
+<tr>
+<td>9</td>
+<td>receptorScroll</td>
+<td>Receptor kayma</td>
+</tr>
+<tr>
+<td>10</td>
+<td>mini</td>
+<td>Notalari kucultur</td>
+</tr>
+<tr>
+<td>11</td>
+<td>transformX</td>
+<td>Nota pozisyon degisimi</td>
+</tr>
+<tr>
+<td>12</td>
+<td>infinite</td>
+<td>Sonsuz path</td>
+</tr>
+<tr>
+<td>13</td>
+<td>boost</td>
+<td>Hizlandirma</td>
+</tr>
+<tr>
+<td>14</td>
+<td>xmod</td>
+<td>Scroll hizi kontrolu</td>
+</tr>
+<tr>
+<td>15</td>
+<td>rotateX</td>
+<td>3D dondurme</td>
+</tr>
+</tbody>
+</table>
+<h3 id="93-script-modifier-olusturma">9.3 Script Modifier Olusturma</h3>
+<pre><code class="language-haxe">// scripts/modifiers/my-modifier.hx
+
+function getName() {
+    return &quot;myModifier&quot;;
+}
+
+function getModType() {
+    return &quot;NOTE_MOD&quot;;
+}
+
+function getOrder() {
+    return 0;
+}
+
+function getPos(time, diff, tDiff, beat, pos, data, player, obj) {
+    pos.x += 50;
+    pos.y += Math.sin(beat * 2) * 30;
+    return pos;
+}
+</code></pre>
+<hr />
+<h2 id="bolum-10-shader-sistemi">Bolum 10: Shader Sistemi</h2>
+<h3 id="101-shader-nedir">10.1 Shader Nedir?</h3>
+<p>Shader'lar goruntuyu islemek icin kullanilan programlardir.</p>
+<h3 id="102-shader-yeri">10.2 Shader Yeri</h3>
+<p>Shader'lar <code>shaders/</code> klasorunde bulunur:</p>
+<pre><code>shaders/
+├── adjustColor.frag
+├── rain.frag
+└── my-shader.frag
+</code></pre>
+<h3 id="103-shader-ornegi">10.3 Shader Ornegi</h3>
+<pre><code class="language-glsl">// shaders/my-shader.frag
+
+uniform sampler2D uTexture;
+uniform float uTime;
+varying vec2 vTextureCoord;
+
+void main() {
+    vec4 color = texture2D(uTexture, vTextureCoord);
+    color.r = sin(uTime) * 0.5 + 0.5;
+    color.g = cos(uTime) * 0.5 + 0.5;
+    gl_FragColor = color;
+}
+</code></pre>
+<hr />
+<h2 id="bolum-11-event-sistemi">Bolum 11: Event Sistemi</h2>
+<h3 id="111-event-nedir">11.1 Event Nedir?</h3>
+<p>Event'ler sarki sirasinda yapilan degisikliklerdir.</p>
+<h3 id="112-desteklenen-eventler">11.2 Desteklenen Event'ler</h3>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Aciklama</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Change Character</td>
+<td>Character degistirme</td>
+</tr>
+<tr>
+<td>Play Animation</td>
+<td>Animasyon oynatma</td>
+</tr>
+<tr>
+<td>Add Camera Zoom</td>
+<td>Kamera zoom ekleme</td>
+</tr>
+<tr>
+<td>Kill Henchmen</td>
+<td>Dusman oldurme</td>
+</tr>
+<tr>
+<td>BG Freaks Expression</td>
+<td>Arka plan ifadesi degisimi</td>
+</tr>
+</tbody>
+</table>
+<h3 id="113-event-formati">11.3 Event Formati</h3>
+<pre><code class="language-json">[
+    1000,
+    [
+        [&quot;Change Character&quot;, &quot;dad&quot;, &quot;angry-dad&quot;],
+        [&quot;Play Animation&quot;, &quot;singUP&quot;, &quot;bf&quot;]
+    ]
+]
+</code></pre>
+<hr />
+<h2 id="bolum-12-dialog-sistemi">Bolum 12: Dialog Sistemi</h2>
+<h3 id="121-dialog-nedir">12.1 Dialog Nedir?</h3>
+<p>Dialog, character'lar arasi diyalog ve cutscene'lerdir.</p>
+<h3 id="122-dialog-formati">12.2 Dialog Formati</h3>
+<pre><code>&quot;:characterName: dialogue text&quot;
+</code></pre>
+<h3 id="123-dialog-ornegi">12.3 Dialog Ornegi</h3>
+<pre><code>:bf: Hey!
+:senpai: Selam!
+:bf: Nasilsin?
+:senpai: Iyiyim, tesekkurler!
+</code></pre>
+<hr />
+<h2 id="bolum-13-mod-yuku">Bolum 13: Mod Yuku</h2>
+<ol>
+<li>Mod klasorunu <code>content/</code> altina koyun</li>
+<li>Oyuna girin</li>
+<li>TAB tusuna basin (Mods menusu)</li>
+<li>Modu aktif edin</li>
+</ol>
+<hr />
+<h2 id="bolum-14-sik-sorulan-sorular">Bolum 14: Sik Sorulan Sorular</h2>
+<h3 id="1-sarki-nerede">1. Sarki nerede?</h3>
+<p><code>songs/</code> klasorunde! <code>data/songs/</code> DEGIL!</p>
+<h3 id="2-character-nerede">2. Character nerede?</h3>
+<p><code>data/characters/</code> klasorunde <code>.json</code> dosyalari olarak.</p>
+<h3 id="3-stage-nerede">3. Stage nerede?</h3>
+<p><code>data/stages/</code> klasorunde her biri icin ayri klasor olarak.</p>
+<h3 id="4-script-nerede">4. Script nerede?</h3>
+<ul>
+<li>Global: <code>scripts/</code> klasorunde</li>
+<li>Stage: <code>data/stages/mystage/script.hx</code></li>
+<li>Modifier: <code>scripts/modifiers/</code> klasorunde</li>
+</ul>
+<h3 id="5-shader-nerede">5. Shader nerede?</h3>
+<p><code>shaders/</code> klasorunde <code>.frag</code> dosyalari olarak.</p>
+<h3 id="6-ses-dosyalari-nerede">6. Ses dosyalari nerede?</h3>
+<ul>
+<li>Sarki sesleri: <code>songs/my-song/audio/</code></li>
+<li>Ses efektleri: <code>sounds/</code></li>
+<li>Muzikler: <code>music/</code></li>
+</ul>
+<h3 id="7-gorseller-nerede">7. Gorseller nerede?</h3>
+<ul>
+<li>Character: <code>images/characters/</code></li>
+<li>Stage: <code>images/backgrounds/</code></li>
+<li>UI: <code>images/UI/</code></li>
+</ul>
+<hr />
+<h2 id="ek-tam-klasor-yapisi">Ek: Tam Klasor Yapisi</h2>
+<pre><code>content/my-mod/
+├── meta.json
+├── README.md
+├── data/
+│   ├── characters/
+│   │   ├── bf.json
+│   │   ├── dad.json
+│   │   ├── gf.json
+│   │   └── my-character.json
+│   ├── stages/
+│   │   ├── stage/
+│   │   │   ├── data.json
+│   │   │   └── script.hx
+│   │   └── mystage/
+│   │       ├── data.json
+│   │       └── script.hx
+│   ├── weeks/
+│   │   ├── tutorial.json
+│   │   └── my-week.json
+│   ├── noteskins/
+│   │   └── default.json
+│   ├── notetypes/
+│   │   └── my-notetype.hx
+│   ├── events/
+│   │   └── event-list.txt
+│   ├── dialogue/
+│   │   └── my-dialogue/
+│   │       └── dialogue.txt
+│   ├── scripts/
+│   │   └── pixelUI.hx
+│   └── freeplay.json
+├── songs/
+│   ├── tutorial/
+│   │   ├── audio/
+│   │   │   ├── Inst.ogg
+│   │   │   └── Voices.ogg
+│   │   ├── charts/
+│   │   │   ├── easy.json
+│   │   │   ├── normal.json
+│   │   │   └── hard.json
+│   │   ├── meta.json
+│   │   └── info.txt
+│   └── my-song/
+│       ├── audio/
+│       │   ├── Inst.ogg
+│       │   └── Voices.ogg
+│       ├── charts/
+│       │   ├── easy.json
+│       │   ├── normal.json
+│       │   ├── hard.json
+│       │   └── events.json
+│       ├── meta.json
+│       └── info.txt
+├── images/
+│   ├── backgrounds/
+│   │   ├── stageback.png
+│   │   ├── stagefront.png
+│   │   └── stagecurtains.png
+│   ├── characters/
+│   │   ├── bf.png
+│   │   ├── bf.xml
+│   │   ├── Dad_MF.png
+│   │   └── Dad_MF.xml
+│   ├── cutscenes/
+│   │   └── my-cutscene/
+│   │       ├── Animation.json
+│   │       ├── spritemap1.json
+│   │       └── spritemap1.png
+│   ├── menus/
+│   │   └── story/
+│   │       ├── bgs/
+│   │       ├── characters/
+│   │       └── weeks/
+│   ├── pixelUI/
+│   │   ├── dialogueBox-pixel.png
+│   │   └── senpaiPortrait.png
+│   └── UI/
+│       ├── icon64.png
+│       ├── icons/
+│       │   ├── icon-bf.png
+│       │   └── icon-dad.png
+│       └── notes/
+│           ├── NOTE_assets.png
+│           ├── NOTE_assets.xml
+│           ├── noteSplashes-vanilla.png
+│           └── holdCover.png
+├── sounds/
+│   ├── Miss note.ogg
+│   └── Hit note.ogg
+├── music/
+│   └── DISTORTO.ogg
+├── shaders/
+│   ├── adjustColor.frag
+│   ├── rain.frag
+│   └── my-shader.frag
+└── scripts/
+    ├── global.hx
+    ├── myplaystate.hx
+    └── modifiers/
+        └── my-modifier.hx
+</code></pre>
+<hr />
+<p>Bu documentary Snail Engine modding'inin tam kapsamli rehberidir. Her bolum detayli bilgi ve ornekler icerir.</p>
+<p style="text-align:center; color:#999; margin-top:50px;">PDF olarak kaydetmek icin: Ctrl+P > Kaydet olarak PDF</p>
+</body>
+</html>

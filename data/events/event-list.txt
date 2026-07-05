@@ -1,0 +1,5 @@
+Change Character - Character degistirir
+Play Animation - Animasyon oynatir
+Add Camera Zoom - Kamera zoom ekler
+Kill Henchmen - Dusman oldurur
+BG Freaks Expression - Arka plan ifadesini degistirir

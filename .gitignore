@@ -1,0 +1,16 @@
+# Git Ignore
+
+export/
+bin/
+build/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+Thumbs.db
+.DS_Store
+desktop.ini
+*.tmp
+*.temp
+*.log

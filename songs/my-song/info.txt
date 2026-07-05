@@ -1,0 +1,6 @@
+display name=My Song
+artist=Your Name
+arnings=
+bpm=120
+speed=1.8
+needsVoices=1

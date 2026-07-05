@@ -1,0 +1,11 @@
+{
+    "songName": "my-song",
+    "displayName": "My Song",
+    "composers": ["Your Name"],
+    "charters": ["Your Name"],
+    "artists": ["Your Name"],
+    "coders": [],
+    "difficulties": ["easy", "Normal", "hard"],
+    "freeplayColor": "#9271FD",
+    "freeplayIcon": "face"
+}

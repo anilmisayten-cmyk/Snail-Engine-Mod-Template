@@ -1,0 +1,16 @@
+{
+    "song": "my-song",
+    "notes": [],
+    "events": [],
+    "bpm": 120,
+    "needsVoices": true,
+    "speed": 1.5,
+    "keys": 4,
+    "lanes": 2,
+    "player1": "bf",
+    "player2": "dad",
+    "gfVersion": "gf",
+    "stage": "stage",
+    "arrowSkins": [""],
+    "format": "nmv2"
+}

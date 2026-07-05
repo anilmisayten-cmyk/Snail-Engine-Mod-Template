@@ -1,0 +1,8 @@
+{
+    "name": "My Snail Engine Mod",
+    "description": "A custom mod for Friday Night Funkin' Snail Engine",
+    "global": false,
+    "windowTitle": "Friday Night Funkin' - My Mod",
+    "iconFile": "UI/icon64",
+    "defaultTransition": "swipe"
+}

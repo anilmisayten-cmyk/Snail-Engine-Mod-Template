@@ -1,0 +1,54 @@
+{
+    "animations": [
+        {
+            "anim": "idle",
+            "name": "Dad idle dance",
+            "fps": 24,
+            "loop": false,
+            "offsets": [0, 0],
+            "indices": []
+        },
+        {
+            "anim": "singLEFT",
+            "name": "Dad Note Left0",
+            "fps": 24,
+            "loop": false,
+            "offsets": [-6, -6],
+            "indices": []
+        },
+        {
+            "anim": "singDOWN",
+            "name": "Dad Note Down0",
+            "fps": 24,
+            "loop": false,
+            "offsets": [-6, -19],
+            "indices": []
+        },
+        {
+            "anim": "singUP",
+            "name": "Dad Note Up0",
+            "fps": 24,
+            "loop": false,
+            "offsets": [-6, 27],
+            "indices": []
+        },
+        {
+            "anim": "singRIGHT",
+            "name": "Dad Note Right0",
+            "fps": 24,
+            "loop": false,
+            "offsets": [-6, 10],
+            "indices": []
+        }
+    ],
+    "image": "characters/Dad_MF",
+    "scale": 1,
+    "sing_duration": 6.1,
+    "healthicon": "face",
+    "position": [0, 0],
+    "camera_position": [0, 0],
+    "flip_x": false,
+    "no_antialiasing": false,
+    "healthbar_colour": -6832696,
+    "dance_every": 2
+}

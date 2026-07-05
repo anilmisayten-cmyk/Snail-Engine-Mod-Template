@@ -1,0 +1,15 @@
+{
+    "songs": [
+        ["my-song", "dad", [146, 113, 253]]
+    ],
+    "weekCharacters": ["dad", "bf", "gf"],
+    "weekBackground": "stage",
+    "weekBefore": "",
+    "storyName": "My Custom Week",
+    "weekName": "Week Template",
+    "freeplayColor": [146, 113, 253],
+    "startUnlocked": true,
+    "hiddenUntilUnlocked": false,
+    "hideStoryMode": false,
+    "hideFreeplay": false
+}

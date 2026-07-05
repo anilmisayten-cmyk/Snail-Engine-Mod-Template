@@ -1,0 +1,81 @@
+{
+    "noteTexture": "UI/notes/NOTE_assets",
+    "splashTexture": "UI/notes/noteSplashes-vanilla",
+    "sustainSplashTexture": "UI/notes/holdCover",
+    "antialiasing": true,
+    "singAnimations": ["singLEFT", "singDOWN", "singUP", "singRIGHT"],
+    "noteAnimations": [
+        [
+            {"anim": "scroll", "xmlName": "purple0"},
+            {"anim": "hold", "xmlName": "purple hold piece"},
+            {"anim": "holdend", "xmlName": "pruple end hold"}
+        ],
+        [
+            {"anim": "scroll", "xmlName": "blue0"},
+            {"anim": "hold", "xmlName": "blue hold piece"},
+            {"anim": "holdend", "xmlName": "blue hold end"}
+        ],
+        [
+            {"anim": "scroll", "xmlName": "green0"},
+            {"anim": "hold", "xmlName": "green hold piece"},
+            {"anim": "holdend", "xmlName": "green hold end"}
+        ],
+        [
+            {"anim": "scroll", "xmlName": "red0"},
+            {"anim": "hold", "xmlName": "red hold piece"},
+            {"anim": "holdend", "xmlName": "red hold end"}
+        ]
+    ],
+    "receptorAnimations": [
+        [
+            {"anim": "static", "xmlName": "arrow defaults"},
+            {"anim": "pressed", "xmlName": "down press"},
+            {"anim": "confirm", "xmlName": "down confirm"}
+        ],
+        [
+            {"anim": "static", "xmlName": "arrow defaults"},
+            {"anim": "pressed", "xmlName": "down press"},
+            {"anim": "confirm", "xmlName": "down confirm"}
+        ],
+        [
+            {"anim": "static", "xmlName": "arrow defaults"},
+            {"anim": "pressed", "xmlName": "down press"},
+            {"anim": "confirm", "xmlName": "down confirm"}
+        ],
+        [
+            {"anim": "static", "xmlName": "arrow defaults"},
+            {"anim": "pressed", "xmlName": "down press"},
+            {"anim": "confirm", "xmlName": "down confirm"}
+        ]
+    ],
+    "noteSplashAnimations": [
+        {"anim": "note1", "xmlName": "note splash purple"},
+        {"anim": "note2", "xmlName": "note splash blue 2"},
+        {"anim": "note3", "xmlName": "note splash green 2"},
+        {"anim": "note4", "xmlName": "note splash red 2"}
+    ],
+    "susSplashAnimations": [
+        [
+            {"anim": "start", "xmlName": "holdCover"},
+            {"anim": "loop", "xmlName": "holdCover loop0"},
+            {"anim": "end", "xmlName": "holdCover end0"}
+        ]
+    ],
+    "splashesEnabled": true,
+    "susSplashesEnabled": true,
+    "receptorAlpha": 0.8,
+    "sustainAlpha": 0.6,
+    "splashAlpha": 1,
+    "susSplashAlpha": 1,
+    "receptorScale": 0.7,
+    "noteScale": 0.7,
+    "splashScale": 1,
+    "susSplashScale": 1,
+    "inGameColoring": true,
+    "arrowRGB": [
+        {"r": 16329925, "g": 16496834, "b": 5910447},
+        {"r": 1633077, "g": 1049163, "b": 16723530},
+        {"r": 3134892, "g": 3704093, "b": 3818295},
+        {"r": 16329925, "g": 1633077, "b": 3818295}
+    ]
+}
