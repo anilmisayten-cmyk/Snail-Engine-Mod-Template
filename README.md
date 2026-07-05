@@ -330,4 +330,4 @@ function getPos(time, diff, tDiff, beat, pos, data, player, obj) {
 
 ## Lisans
 
-Apache 2.0
+Snail Engine by Friggy Team — Apache 2.0
